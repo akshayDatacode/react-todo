@@ -42,7 +42,6 @@ class AddTask extends Component {
     }
 
     if (!this.state.isEmpty) {
-      alert("New Task Added");
       this.props.addTask(todoList);
       this.formReset();
     }
