@@ -5,10 +5,7 @@ import DeleteModal from "./DeleteModal";
 
 class Index extends Component {
   state = {
-    TodoList: [
-      { taskNo: 1, todo: "Home Work" },
-      { taskNo: 2, todo: "Sleep well" },
-    ],
+    TodoList: [],
     show: false,
     taskNo: "",
   };

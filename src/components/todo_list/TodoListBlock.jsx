@@ -45,33 +45,41 @@ class TodoListBlock extends Component {
             <Nav.Item>
               <Nav.Link eventKey="1">Todo List</Nav.Link>
             </Nav.Item>
-            <Nav.Item>
-              <form>
-                <div className="form-group ml-5 ">
-                  <br />
-                  <label className="mr-2">Search</label>
-                  <input
-                    type="text"
-                    value={this.state.searchText}
-                    onChange={this.handleInputChangeSearchText}
-                  />
-                </div>
-              </form>
-            </Nav.Item>
-            <NavDropdown title="Filter" id="nav-dropdown" className="mt-4 ml-4">
-              <NavDropdown.Item eventKey="4.1">
-                <button onClick={() => this.props.recentFirst()}>
-                  Recent First
-                </button>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <button onClick={() => this.props.az()}>A to Z</button>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <button onClick={() => this.props.za()}>Z to A</button>
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-            </NavDropdown>
+            {this.state.TodoList.length > 1 && (
+              <Nav.Item>
+                <form>
+                  <div className="form-group ml-5 ">
+                    <br />
+                    <label className="mr-2">Search</label>
+                    <input
+                      type="text"
+                      value={this.state.searchText}
+                      onChange={this.handleInputChangeSearchText}
+                    />
+                  </div>
+                </form>
+              </Nav.Item>
+            )}
+            {this.state.TodoList.length > 1 && (
+              <NavDropdown
+                title="Filter"
+                id="nav-dropdown"
+                className="mt-4 ml-4"
+              >
+                <NavDropdown.Item eventKey="4.1">
+                  <button onClick={() => this.props.recentFirst()}>
+                    Recent First
+                  </button>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <button onClick={() => this.props.az()}>A to Z</button>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <button onClick={() => this.props.za()}>Z to A</button>
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+              </NavDropdown>
+            )}
           </Nav>
           <table class="table">
             <thead>
