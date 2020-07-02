@@ -2,7 +2,44 @@ import React, { Component } from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 class TodoListBlock extends Component {
-  state = {};
+  state = {
+    searchText: " ",
+    TodoList: [],
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.TodoList !== this.state.TodoList) {
+      this.setState({ TodoList: nextProps.TodoList });
+    }
+  }
+
+  handleSearch = (searchText) => {
+    this.setState({ TodoList: this.props.TodoList });
+    console.log("data get ", searchText);
+    const usersRef = [...this.state.TodoList];
+    console.log("data get 222 ", usersRef);
+    let isSearched = false;
+    const task = usersRef.filter((item) => {
+      if (item.todo == searchText && searchText.length > 3) {
+        isSearched = true;
+        console.log("DDDDD", item, isSearched);
+        return item;
+      }
+    });
+
+    if (isSearched && searchText.length > 3) {
+      this.setState({ TodoList: task });
+      console.log("data get3333", this.state.TodoList);
+    }
+  };
+
+  handleInputChangeSearchText = (event) => {
+    this.setState({
+      searchText: event.target.value,
+    });
+    this.handleSearch(this.state.searchText);
+  };
+
   render() {
     return (
       <>
@@ -13,16 +50,21 @@ class TodoListBlock extends Component {
               <Nav.Link eventKey="1">Todo List</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="3" disabled className=" ml-3 mr-5">
-                Search :{" "}
-                <input
-                  type="text"
-                  value={this.state.todo}
-                  onChange={this.handleInputChangeTodo}
-                />
-              </Nav.Link>
+              <form>
+                <div className="form-group ml-5 ">
+                  <br />
+                  <label for="exampleInputEmail1" className="mr-2">
+                    Search
+                  </label>
+                  <input
+                    type="text"
+                    value={this.state.searchText}
+                    onChange={this.handleInputChangeSearchText}
+                  />
+                </div>
+              </form>
             </Nav.Item>
-            <NavDropdown title="Filter" id="nav-dropdown">
+            <NavDropdown title="Filter" id="nav-dropdown" className="mt-4 ml-4">
               <NavDropdown.Item eventKey="4.1">
                 <button onClick={() => this.props.recentFirst()}>
                   Recent First
@@ -44,7 +86,7 @@ class TodoListBlock extends Component {
                 <th scope="col"></th>
               </tr>
             </thead>
-            {this.props.TodoList.slice(0)
+            {this.state.TodoList.slice(0)
               .reverse()
               .map((element) => (
                 <tbody>
