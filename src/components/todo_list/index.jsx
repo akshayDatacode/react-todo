@@ -35,6 +35,26 @@ class Index extends Component {
     this.setState({ TodoList: task, show: false });
   };
 
+  recentFirst = () => {
+    const usersRef = [...this.state.TodoList];
+    const recent = usersRef.sort((a, b) =>
+      a.createdAt > b.createdAt ? 1 : -1
+    );
+    this.setState({ TodoList: recent });
+  };
+
+  az = () => {
+    const usersRef = [...this.state.TodoList];
+    const az = usersRef.sort((a, b) => (a.todo < b.todo ? 1 : -1));
+    this.setState({ TodoList: az });
+  };
+
+  za = () => {
+    const usersRef = [...this.state.TodoList];
+    const za = usersRef.sort((a, b) => (a.todo > b.todo ? 1 : -1));
+    this.setState({ TodoList: za });
+  };
+
   handleDelete = (taskNo) => {
     this.setState({ show: true, taskNo: taskNo });
   };
@@ -60,6 +80,11 @@ class Index extends Component {
             <TodoListBlock
               TodoList={this.state.TodoList}
               handleDelete={this.handleDelete}
+              recentFirst={this.recentFirst}
+              az={this.az}
+              AZ={this.state.az}
+              za={this.za}
+              ZA={this.state.za}
             />
             <DeleteModal
               handleShow={this.handleShow}

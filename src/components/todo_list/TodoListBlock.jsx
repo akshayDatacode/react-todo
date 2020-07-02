@@ -23,9 +23,17 @@ class TodoListBlock extends Component {
               </Nav.Link>
             </Nav.Item>
             <NavDropdown title="Filter" id="nav-dropdown">
-              <NavDropdown.Item eventKey="4.1">Recent First</NavDropdown.Item>
-              <NavDropdown.Item eventKey="4.2">A to Z</NavDropdown.Item>
-              <NavDropdown.Item eventKey="4.3">Z to A</NavDropdown.Item>
+              <NavDropdown.Item eventKey="4.1">
+                <button onClick={() => this.props.recentFirst()}>
+                  Recent First
+                </button>
+              </NavDropdown.Item>
+              <NavDropdown.Item eventKey="4.2">
+                <button onClick={() => this.props.az()}>A to Z</button>
+              </NavDropdown.Item>
+              <NavDropdown.Item eventKey="4.3">
+                <button onClick={() => this.props.za()}>Z to A</button>
+              </NavDropdown.Item>
               <NavDropdown.Divider />
             </NavDropdown>
           </Nav>
@@ -36,21 +44,23 @@ class TodoListBlock extends Component {
                 <th scope="col"></th>
               </tr>
             </thead>
-            {this.props.TodoList.map((element) => (
-              <tbody>
-                <tr>
-                  <td>{element.todo}</td>
-                  <td>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => this.props.handleDelete(element.taskNo)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            ))}
+            {this.props.TodoList.slice(0)
+              .reverse()
+              .map((element) => (
+                <tbody>
+                  <tr>
+                    <td>{element.todo}</td>
+                    <td>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => this.props.handleDelete(element.taskNo)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              ))}
           </table>
         </>
       </>
