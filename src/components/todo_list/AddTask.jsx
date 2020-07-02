@@ -3,14 +3,12 @@ import React, { Component } from "react";
 class AddTask extends Component {
   state = {
     todo: "",
-    // taskNo: "",
     createdAt: {},
     isEmpty: true,
     showError: false,
   };
 
   handleSubmit = (event) => {
-    console.log("handle submit ON");
     event.preventDefault();
     let uniqId = Math.random().toString(36).substr(2, 9);
     let date = new Date();
@@ -25,8 +23,6 @@ class AddTask extends Component {
     todoList.todo = this.state.todo;
     todoList.createdAt = date;
 
-    console.log("handle wala TODO LIST", todoList);
-
     // Code for cheking isEmpty
     if (todoList.todo != "") {
       this.setState({
@@ -38,7 +34,6 @@ class AddTask extends Component {
         isEmpty: true,
         showError: true,
       });
-      console.log("Khali he ");
     }
 
     if (!this.state.isEmpty) {
@@ -50,7 +45,6 @@ class AddTask extends Component {
   formReset = () => {
     this.setState({
       todo: "",
-      // taskNo: "",
       taskDeadLine: "",
       isEmpty: true,
       showError: false,

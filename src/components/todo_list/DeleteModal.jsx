@@ -4,7 +4,7 @@ import { Modal, Button } from "react-bootstrap";
 const DeleteModal = (props) => {
   return (
     <>
-      <Modal show={props.show} size="lg" onHide={props.handleClose}>
+      <Modal show={props.show} size="sm" onHide={props.handleClose}>
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body className="text-center">
           Are you Sure Want to Delete Todo Task{" "}

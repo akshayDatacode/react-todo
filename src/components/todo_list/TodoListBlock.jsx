@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Nav, NavDropdown } from "react-bootstrap";
 
 class TodoListBlock extends Component {
   state = {
@@ -15,21 +15,17 @@ class TodoListBlock extends Component {
 
   handleSearch = (searchText) => {
     this.setState({ TodoList: this.props.TodoList });
-    console.log("data get ", searchText);
     const usersRef = [...this.state.TodoList];
-    console.log("data get 222 ", usersRef);
     let isSearched = false;
     const task = usersRef.filter((item) => {
       if (item.todo == searchText && searchText.length > 3) {
         isSearched = true;
-        console.log("DDDDD", item, isSearched);
         return item;
       }
     });
 
     if (isSearched && searchText.length > 3) {
       this.setState({ TodoList: task });
-      console.log("data get3333", this.state.TodoList);
     }
   };
 
@@ -53,9 +49,7 @@ class TodoListBlock extends Component {
               <form>
                 <div className="form-group ml-5 ">
                   <br />
-                  <label for="exampleInputEmail1" className="mr-2">
-                    Search
-                  </label>
+                  <label className="mr-2">Search</label>
                   <input
                     type="text"
                     value={this.state.searchText}
@@ -70,10 +64,10 @@ class TodoListBlock extends Component {
                   Recent First
                 </button>
               </NavDropdown.Item>
-              <NavDropdown.Item eventKey="4.2">
+              <NavDropdown.Item>
                 <button onClick={() => this.props.az()}>A to Z</button>
               </NavDropdown.Item>
-              <NavDropdown.Item eventKey="4.3">
+              <NavDropdown.Item>
                 <button onClick={() => this.props.za()}>Z to A</button>
               </NavDropdown.Item>
               <NavDropdown.Divider />
@@ -92,7 +86,6 @@ class TodoListBlock extends Component {
                 <tbody>
                   <tr>
                     <td>{element.todo}</td>
-
                     <td>
                       <button
                         className="btn btn-danger"

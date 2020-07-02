@@ -11,25 +11,18 @@ class Index extends Component {
     ],
     show: false,
     taskNo: "",
-    searchText: "",
   };
 
   addTask = (task) => {
-    console.log("data get ", task);
     const usersRef = [...this.state.TodoList];
-    console.log("data get 222 ", usersRef);
     usersRef.push(task);
     this.setState({ TodoList: usersRef });
-    console.log("State Data", this.state.TodoList);
   };
 
   deleteTask = () => {
-    console.log("data get ", this.state.taskNo);
     const usersRef = [...this.state.TodoList];
     const task = usersRef.filter((item) => {
-      console.log(parseInt(item.taskNo), parseInt(this.state.taskNo));
       if (item.taskNo !== this.state.taskNo) {
-        console.log("DDDDD", item);
         return item;
       }
     });
@@ -81,7 +74,6 @@ class Index extends Component {
             {" "}
             <TodoListBlock
               TodoList={this.state.TodoList}
-              TodoListSearched={this.state.TodoListSearched}
               handleDelete={this.handleDelete}
               recentFirst={this.recentFirst}
               az={this.az}
