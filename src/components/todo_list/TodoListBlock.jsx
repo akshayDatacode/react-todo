@@ -92,6 +92,7 @@ class TodoListBlock extends Component {
                 <tbody>
                   <tr>
                     <td>{element.todo}</td>
+
                     <td>
                       <button
                         className="btn btn-danger"
