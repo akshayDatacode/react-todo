@@ -3,37 +3,43 @@ import { Nav, NavDropdown } from "react-bootstrap";
 
 class TodoListBlock extends Component {
   state = {
-    searchText: " ",
-    TodoList: [],
+    searchText: "",
+    todoList: [],
+    searchActive: false,
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.TodoList !== this.state.TodoList) {
-      this.setState({ TodoList: nextProps.TodoList });
+    if (nextProps.todoList !== this.state.todoList) {
+      this.setState({ todoList: nextProps.todoList });
     }
   }
 
-  handleSearch = (searchText) => {
-    this.setState({ TodoList: this.props.TodoList });
-    const usersRef = [...this.state.TodoList];
+  handleSearch = () => {
+    this.setState({ todoList: this.props.todoList });
+    const todoListRef = [...this.state.todoList];
     let isSearched = false;
-    const task = usersRef.filter((item) => {
-      if (item.todo == searchText && searchText.length > 3) {
+    const task = todoListRef.filter((item) => {
+      if (
+        item.todo.includes(this.state.searchText) &&
+        this.state.searchText.length > 2
+      ) {
         isSearched = true;
         return item;
       }
     });
 
-    if (isSearched && searchText.length > 3) {
-      this.setState({ TodoList: task });
+    if (isSearched && this.state.searchText.length > 2) {
+      this.setState({ todoList: task });
     }
   };
 
   handleInputChangeSearchText = (event) => {
+    event.preventDefault();
     this.setState({
       searchText: event.target.value,
+      searchActive: true,
     });
-    this.handleSearch(this.state.searchText);
+    this.handleSearch();
   };
 
   render() {
@@ -42,10 +48,12 @@ class TodoListBlock extends Component {
         <h1 className="mb-5">My Todo List</h1>
         <>
           <Nav variant="pills" activeKey="1">
-            <Nav.Item>
-              <Nav.Link eventKey="1">Todo List</Nav.Link>
-            </Nav.Item>
-            {this.state.TodoList.length > 1 && (
+            <div>
+              <div className="badge badge-primary">
+                <h5 className="p-1">Todo List</h5>
+              </div>
+            </div>
+            {this.state.todoList.length > 1 && (
               <Nav.Item>
                 <form>
                   <div className="form-group ml-5 ">
@@ -54,28 +62,28 @@ class TodoListBlock extends Component {
                     <input
                       type="text"
                       value={this.state.searchText}
-                      onChange={this.handleInputChangeSearchText}
+                      onChange={(event) => {
+                        this.handleInputChangeSearchText(event);
+                      }}
                     />
                   </div>
                 </form>
               </Nav.Item>
             )}
-            {this.state.TodoList.length > 1 && (
+            {this.state.todoList.length > 1 && (
               <NavDropdown
                 title="Filter"
                 id="nav-dropdown"
                 className="mt-4 ml-4"
               >
-                <NavDropdown.Item eventKey="4.1">
-                  <button onClick={() => this.props.recentFirst()}>
-                    Recent First
-                  </button>
+                <NavDropdown.Item onClick={() => this.props.recentFirst()}>
+                  Recent First
                 </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <button onClick={() => this.props.az()}>A to Z</button>
+                <NavDropdown.Item onClick={() => this.props.ascendingFilter()}>
+                  A to Z
                 </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <button onClick={() => this.props.za()}>Z to A</button>
+                <NavDropdown.Item onClick={() => this.props.descendingFilter()}>
+                  Z to A
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
               </NavDropdown>
@@ -88,7 +96,8 @@ class TodoListBlock extends Component {
                 <th scope="col"></th>
               </tr>
             </thead>
-            {this.state.TodoList.slice(0)
+            {this.state.todoList
+              .slice(0)
               .reverse()
               .map((element) => (
                 <tbody>

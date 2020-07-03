@@ -3,25 +3,19 @@ import React, { Component } from "react";
 class AddTask extends Component {
   state = {
     todo: "",
-    createdAt: {},
     isEmpty: true,
     showError: false,
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    let uniqId = Math.random().toString(36).substr(2, 9);
-    let date = new Date();
+    const uniqId = Math.random().toString(36).substr(2, 9);
 
     const todoList = {
-      taskNo: "",
-      todo: "",
-      createdAt: {},
+      taskNo: uniqId,
+      todo: this.state.todo,
+      createdAt: new Date(),
     };
-
-    todoList.taskNo = uniqId;
-    todoList.todo = this.state.todo;
-    todoList.createdAt = date;
 
     // Code for cheking isEmpty
     if (todoList.todo != "") {
@@ -29,16 +23,13 @@ class AddTask extends Component {
         isEmpty: false,
         showError: false,
       });
+      this.props.addTask(todoList);
+      this.formReset();
     } else {
       this.setState({
         isEmpty: true,
         showError: true,
       });
-    }
-
-    if (!this.state.isEmpty) {
-      this.props.addTask(todoList);
-      this.formReset();
     }
   };
 
@@ -52,6 +43,7 @@ class AddTask extends Component {
   };
 
   handleInputChangeTodo = (event) => {
+    event.preventDefault();
     this.setState({
       todo: event.target.value,
     });
@@ -60,7 +52,7 @@ class AddTask extends Component {
   render() {
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
+        <form>
           <center>
             <div className="form-group">
               <br />
@@ -70,18 +62,23 @@ class AddTask extends Component {
               <input
                 type="text"
                 value={this.state.todo}
-                onChange={this.handleInputChangeTodo}
+                onChange={(event) => {
+                  this.handleInputChangeTodo(event);
+                }}
               />
               {this.state.showError && (
                 <h6 className="text-danger">Please Insert Todo Task</h6>
               )}
             </div>
-            <button type="submit" className="btn btn-primary text-center">
+            <button
+              className="btn btn-success text-center"
+              onClick={this.handleSubmit}
+            >
               Submit
             </button>
             <button
               type="reset"
-              className="btn btn-default btn-danger ml-5"
+              className="btn btn-primary ml-5"
               onClick={this.formReset}
             >
               Reset

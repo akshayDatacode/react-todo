@@ -3,48 +3,48 @@ import AddTask from "./AddTask";
 import TodoListBlock from "./TodoListBlock";
 import DeleteModal from "./DeleteModal";
 
-class Index extends Component {
+class MainComponent extends Component {
   state = {
-    TodoList: [],
+    todoList: [],
     show: false,
     taskNo: "",
   };
 
   addTask = (task) => {
-    const usersRef = [...this.state.TodoList];
-    usersRef.push(task);
-    this.setState({ TodoList: usersRef });
+    const todoListRef = [...this.state.todoList];
+    todoListRef.push(task);
+    this.setState({ todoList: todoListRef });
   };
 
   deleteTask = () => {
-    const usersRef = [...this.state.TodoList];
-    const task = usersRef.filter((item) => {
+    const todoListRef = [...this.state.todoList];
+    const task = todoListRef.filter((item) => {
       if (item.taskNo !== this.state.taskNo) {
         return item;
       }
     });
 
-    this.setState({ TodoList: task, show: false });
+    this.setState({ todoList: task, show: false });
   };
 
   recentFirst = () => {
-    const usersRef = [...this.state.TodoList];
-    const recent = usersRef.sort((a, b) =>
+    const todoListRef = [...this.state.todoList];
+    const recent = todoListRef.sort((a, b) =>
       a.createdAt > b.createdAt ? 1 : -1
     );
-    this.setState({ TodoList: recent });
+    this.setState({ todoList: recent });
   };
 
-  az = () => {
-    const usersRef = [...this.state.TodoList];
-    const az = usersRef.sort((a, b) => (a.todo < b.todo ? 1 : -1));
-    this.setState({ TodoList: az });
+  ascendingFilter = () => {
+    const todoListRef = [...this.state.todoList];
+    const az = todoListRef.sort((a, b) => (a.todo < b.todo ? 1 : -1));
+    this.setState({ todoList: az });
   };
 
-  za = () => {
-    const usersRef = [...this.state.TodoList];
-    const za = usersRef.sort((a, b) => (a.todo > b.todo ? 1 : -1));
-    this.setState({ TodoList: za });
+  descendingFilter = () => {
+    const todoListRef = [...this.state.todoList];
+    const za = todoListRef.sort((a, b) => (a.todo > b.todo ? 1 : -1));
+    this.setState({ todoList: za });
   };
 
   handleDelete = (taskNo) => {
@@ -70,13 +70,11 @@ class Index extends Component {
           <div className="col-md-6">
             {" "}
             <TodoListBlock
-              TodoList={this.state.TodoList}
+              todoList={this.state.todoList}
               handleDelete={this.handleDelete}
               recentFirst={this.recentFirst}
-              az={this.az}
-              AZ={this.state.az}
-              za={this.za}
-              ZA={this.state.za}
+              ascendingFilter={this.ascendingFilter}
+              descendingFilter={this.descendingFilter}
             />
             <DeleteModal
               handleShow={this.handleShow}
@@ -91,4 +89,4 @@ class Index extends Component {
   }
 }
 
-export default Index;
+export default MainComponent;
